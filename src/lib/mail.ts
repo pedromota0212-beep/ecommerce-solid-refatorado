@@ -6,7 +6,6 @@ let transporter: nodemailer.Transporter | null = null;
 export const getMailClient = async () => {
   if (transporter) return transporter;
 
-  // Cria uma conta de teste no Ethereal automaticamente
   const testAccount = await nodemailer.createTestAccount();
 
   transporter = nodemailer.createTransport({
@@ -16,6 +15,9 @@ export const getMailClient = async () => {
     auth: {
       user: testAccount.user,
       pass: testAccount.pass,
+    },
+    tls: {
+      rejectUnauthorized: true,
     },
   });
 
